@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { NewPizzaModal } from './components/NewPizzaModal';
 
-function App() {
+import { useState } from 'react';
+
+import { Header } from "./components/Header";
+
+import { GlobalStyle } from './styles/global';
+import { PizzaProvider } from './PizzaContext';
+import { Table } from './components/Table';
+
+
+
+
+export function App() {
+  const [isNewPizzaOpen, setIsNewPizzaOpen] = useState(false);
+
+  function handlePizzaOpen() {
+    setIsNewPizzaOpen(true);
+  }
+
+  function handlePizzaClose() {
+    setIsNewPizzaOpen(false);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PizzaProvider>
+      <Header onOpenPizza={handlePizzaOpen} />
+      <GlobalStyle />
+      <NewPizzaModal isOpen={isNewPizzaOpen} onRequestClose={handlePizzaClose} />
+      <Table />
+    </PizzaProvider>
   );
 }
 
